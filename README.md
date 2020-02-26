@@ -1,5 +1,5 @@
-## Ontario G1 Practise Exam Web API
-The web api services for G1 practise exam
+## G1 Exam Web API
+The web api services for Ontario G1 Practise Exam application.
 
 ### Application links
 

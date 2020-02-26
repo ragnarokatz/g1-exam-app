@@ -80,14 +80,16 @@ module.exports = function() {
         // Fetch all documents
         // During development and testing, can "limit" the returned results to a smaller number
         // Remove that function call when deploying into production
-        Questions.find().exec((error, items) => {
-          if (error) {
-            // Query error
-            return reject(error.message);
-          }
-          // Found, a collection will be returned
-          return resolve(items);
-        });
+        Questions.find()
+          .sort({ order: "asc" })
+          .exec((error, items) => {
+            if (error) {
+              // Query error
+              return reject(error.message);
+            }
+            // Found, a collection will be returned
+            return resolve(items);
+          });
       });
     },
 

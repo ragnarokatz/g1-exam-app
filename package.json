@@ -1,7 +1,7 @@
 {
-  "name": "bti425-assign1-webapi",
+  "name": "g1-exam-webapi",
   "version": "1.0.0",
-  "description": "The web api services for BTI425 assignment 1",
+  "description": "The web api services for Ontario G1 Practise Exam",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

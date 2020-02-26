@@ -95,7 +95,7 @@ module.exports = function() {
     questionGetById: function(itemId) {
       return new Promise(function(resolve, reject) {
         // Find one specific document
-        Questions.findById(itemId, (error, item) => {
+        Questions.findOne({ order: itemId }, (error, item) => {
           if (error) {
             // Find/match is not found
             return reject(error.message);

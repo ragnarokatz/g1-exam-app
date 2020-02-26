@@ -9,7 +9,7 @@ mongoose.set("useCreateIndex", true);
 // Load the schemas...
 
 // Data entities; the standard format is:
-const vehicleSchema = require("./msc-vehicle.js");
+const questionSchema = require("./msc-question.js");
 // Add others as needed
 
 // ################################################################################
@@ -17,7 +17,7 @@ const vehicleSchema = require("./msc-vehicle.js");
 
 module.exports = function() {
   // Collection properties, which get their values upon connecting to the database
-  let Vehicles;
+  let Questions;
 
   return {
     // ############################################################
@@ -64,7 +64,7 @@ module.exports = function() {
         // https://nodejs.org/api/events.html#events_emitter_once_eventname_listener
         db.once("open", () => {
           console.log("Connection to the database was successful");
-          Vehicles = db.model("vehicles", vehicleSchema, "vehicles");
+          Questions = db.model("questions", questionSchema, "questions");
           // Add others here...
 
           resolve();
@@ -73,18 +73,14 @@ module.exports = function() {
     },
 
     // ############################################################
-    // Vehicle requests
+    // Question requests - only allow readonly requests
 
-    vehicleGetAll: function(pageNumber = 1, pageSize = 20) {
+    questionGetAll: function() {
       return new Promise(function(resolve, reject) {
         // Fetch all documents
         // During development and testing, can "limit" the returned results to a smaller number
         // Remove that function call when deploying into production
-        skips = pageSize * (pageNumber - 1);
-        Vehicles.find()
-          .skip(skips)
-          .limit(pageSize)
-          .sort({ car_make: "asc", car_model: "asc", car_year: "asc" })
+        Questions.find()
           .exec((error, items) => {
             if (error) {
               // Query error
@@ -96,10 +92,10 @@ module.exports = function() {
       });
     },
 
-    vehicleGetById: function(itemId) {
+    questionGetById: function(itemId) {
       return new Promise(function(resolve, reject) {
         // Find one specific document
-        Vehicles.findById(itemId, (error, item) => {
+        Questions.findById(itemId, (error, item) => {
           if (error) {
             // Find/match is not found
             return reject(error.message);
@@ -114,54 +110,5 @@ module.exports = function() {
         });
       });
     },
-
-    vehicleAdd: function(newItem) {
-      return new Promise(function(resolve, reject) {
-        Vehicles.create(newItem, (error, item) => {
-          if (error) {
-            // Cannot add item
-            return reject(error.message);
-          }
-          //Added object will be returned
-          return resolve(item);
-        });
-      });
-    },
-
-    vehicleEdit: function(newItem) {
-      return new Promise(function(resolve, reject) {
-        Vehicles.findByIdAndUpdate(
-          newItem._id,
-          newItem,
-          { new: true },
-          (error, item) => {
-            if (error) {
-              // Cannot edit item
-              return reject(error.message);
-            }
-            // Check for an item
-            if (item) {
-              // Edited object will be returned
-              return resolve(item);
-            } else {
-              return reject("Not found");
-            }
-          }
-        );
-      });
-    },
-
-    vehicleDelete: function(itemId) {
-      return new Promise(function(resolve, reject) {
-        Vehicles.findByIdAndRemove(itemId, error => {
-          if (error) {
-            // Cannot delete item
-            return reject(error.message);
-          }
-          // Return success, but don't leak info
-          return resolve();
-        });
-      });
-    }
   }; // return statement that encloses all the function members
 }; // module.exports

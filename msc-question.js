@@ -5,11 +5,12 @@ var Schema = mongoose.Schema;
 // Entity schema
 
 var questionSchema = new Schema({
-  Question: String,
-  Picture: String,
-  Answers: Array,
-  Correct: Number,
-  Image: String
+  order: Number,
+  question: String,
+  picture: String,
+  answers: Array,
+  correct: Number,
+  image: String
 });
 
 // Make schema available to the application

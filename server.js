@@ -36,16 +36,16 @@ app.get("/api", (req, res) => {
   // Here are the resources that are available for users of this web API...
   const links = [];
   // This app's resources...
-  links.push({ rel: "collection", href: "/api/vehicles", methods: "GET,POST" });
+  links.push({ rel: "collection", href: "/api/questions", methods: "GET" });
   links.push({
     rel: "collection",
-    href: "/api/vehicles/:id",
-    methods: "GET,PUT,DELETE"
+    href: "/api/questions/:id",
+    methods: "GET"
   });
 
   const linkObject = {
-    apiName: "Vehicles Web API",
-    apiDescription: "BTI425 Assignment 1 Web API Services",
+    apiName: "G1 Exam Web API",
+    apiDescription: "Ontario G1 Practise Exam Web API Services",
     apiVersion: "1.0",
     apiAuthor: "Bowei Yao",
     links: links
@@ -57,9 +57,9 @@ app.get("/api", (req, res) => {
 // Request handlers for data entities (listeners)
 
 // Get all
-app.get("/api/vehicles", (req, res) => {
+app.get("/api/questions", (req, res) => {
   // Call the manager method
-  m.vehicleGetAll(req.query.page)
+  m.questionGetAll(req.query.page)
     .then(data => {
       res.json(data);
     })
@@ -69,47 +69,11 @@ app.get("/api/vehicles", (req, res) => {
 });
 
 // Get one
-app.get("/api/vehicles/:id", (req, res) => {
+app.get("/api/questions/:id", (req, res) => {
   // Call the manager method
-  m.vehicleGetById(req.params.id)
+  m.questionGetById(req.params.id)
     .then(data => {
       res.json(data);
-    })
-    .catch(() => {
-      res.status(404).json({ message: "Resource not found" });
-    });
-});
-
-// Add new
-app.post("/api/vehicles", (req, res) => {
-  // Call the manager method
-  m.vehicleAdd(req.body)
-    .then(data => {
-      res.json(data);
-    })
-    .catch(error => {
-      res.status(500).json({ message: error });
-    });
-});
-
-// Edit existing
-app.put("/api/vehicles/:id", (req, res) => {
-  // Call the manager method
-  m.vehicleEdit(req.body)
-    .then(data => {
-      res.json(data);
-    })
-    .catch(() => {
-      res.status(404).json({ message: "Resource not found" });
-    });
-});
-
-// Delete item
-app.delete("/api/vehicles/:id", (req, res) => {
-  // Call the manager method
-  m.vehicleDelete(req.params.id)
-    .then(() => {
-      res.status(204).end();
     })
     .catch(() => {
       res.status(404).json({ message: "Resource not found" });

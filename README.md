@@ -1,10 +1,10 @@
 ## G1 Exam Web API
-The web api services for Ontario G1 Practise Exam application.
+The web api services for Ontario G1 exam practise questions.
 
 ### Application links
 
-- client: TBD
-- server: TBD
+- web-app: https://g1-exam-webapp.herokuapp.com/
+- web-api: https://g1-exam-webapi.herokuapp.com/
 
 ### Database
 
